@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
       table.string('status');
       table.decimal('total_amount', 10, 2);
       table.integer('user_id').unsigned();
-      table.foreign('user_id').references('users.id');
+      table.foreign('user_id').references('users.id').onDelete('CASCADE');
     })
   ])  
 };

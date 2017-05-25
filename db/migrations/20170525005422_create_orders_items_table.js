@@ -4,9 +4,9 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('orders_items', function(table){
       table.increments('id');
       table.integer('order_id').unsigned();
-      table.foreign('order_id').references('orders.id');
+      table.foreign('order_id').references('orders.id').onDelete('CASCADE');
       table.integer('item_id').unsigned();
-      table.foreign('item_id').references('items.id');
+      table.foreign('item_id').references('items.id').onDelete('CASCADE');
       table.integer('quantity');
     })
   ])   

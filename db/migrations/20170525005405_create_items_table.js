@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
       table.decimal('amount', 10, 2);
       table.string('photo');
       table.integer('restaurant_id').unsigned();
-      table.foreign('restaurant_id').references('restaurants.id');
+      table.foreign('restaurant_id').references('restaurants.id').onDelete('CASCADE');
     })
   ])    
 };
