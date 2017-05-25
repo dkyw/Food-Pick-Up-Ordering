@@ -35,6 +35,15 @@ app.use("/styles", sass({
 }));
 app.use(express.static("public"));
 
+var accountSid = 'ACa36130d8f5d9f228af8a8f65714fb4c0'; // Your Account SID from www.twilio.com/console
+var authToken = 'dbf5cf5b54015e86c6b7d4318b403c0f';   // Your Auth Token from www.twilio.com/console
+var client = require('twilio')(
+  accountSid,
+  authToken
+
+);
+
+
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 
@@ -45,28 +54,34 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-//checkout
-app.post("/orders", (req,res) => {
+checkout
+app.post("/checkout", (req,res) => {
   res.send('checkout');
 });
 
-//restaurant views
+
+// restaurant views
 
 app.get("/orders", (req,res) => {
   res.send('restaurant view');
 });
 
 app.get("/orders/:id", (req,res) => {
-  res.send('restauarnt view for individual orders');
+  res.render('form');
 });
 
-
-app.post("/orders/:id", (req,res) => {
-  res.send('update orders here')
+app.post("/orders", (req,res) => {
+  client.messages.create({
+  from: "+17782007487",
+  to: "+17787823702",
+  body: req.body.time
+  }, function(err, message) {
+    if(err) {
+      console.error(err.message);
+    }
+  });
+  res.send('thanks!')
 });
-
-
-
 
 
 app.listen(PORT, () => {
