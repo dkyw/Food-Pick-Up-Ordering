@@ -5,7 +5,9 @@ exports.up = function(knex, Promise) {
       table.increments('id');
       table.string('name');
       table.string('description', 1023);
-      table.string('phone_number');
+      table.string('phone_number')
+      table.string('logo');
+      table.string('background_image');
     })
   ])      
 };
