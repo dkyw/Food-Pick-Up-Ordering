@@ -38,10 +38,36 @@ app.use(express.static("public"));
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 
+//client views
+
 // Home page
 app.get("/", (req, res) => {
   res.render("index");
 });
+
+//checkout
+app.post("/orders", (req,res) => {
+  res.send('checkout');
+});
+
+//restaurant views
+
+app.get("/orders", (req,res) => {
+  res.send('restaurant view');
+});
+
+app.get("/orders/:id", (req,res) => {
+  res.send('restauarnt view for individual orders');
+});
+
+
+app.post("/orders/:id", (req,res) => {
+  res.send('update orders here')
+});
+
+
+
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
