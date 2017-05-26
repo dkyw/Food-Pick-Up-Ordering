@@ -1,12 +1,4 @@
 $(() => {
-  // $.ajax({
-  //   method: "GET",
-  //   url: "/api/users"
-  // }).done((users) => {
-  //   for(user of users) {
-  //     $("<div>").text(user.name).appendTo($("body"));
-  //   }
-  // });
   function landingPage(restaurant) {
     var $row = $("<div>").addClass("row");
     var $columnSize = $("<div>").addClass("col-md-6 col-sm-12");
@@ -23,10 +15,10 @@ $(() => {
     method: "GET",
     url: "/api/restaurants"
   }).done(function(restaurants) {
-    console.log("restos",restaurants);
-    restaurants.forEach(function(restaurant) {
-      console.log("resto",restaurant);
-      
+    // console.log("restos",restaurants);
+    // restaurants.forEach(function(restaurant) {
+    //   console.log("resto",restaurant);
+      restaurant = restaurants[0];
       var $restaurantLogo = $("<img>").attr({
         id: "restaurantLogo",
         alt: "Restaurant Logo",
@@ -36,7 +28,7 @@ $(() => {
       });
     $(".navbar-fixed-top .container").prepend($restaurantLogo);
     $("#landingPage").append(landingPage(restaurant));
-   });
+  //  });
   });
 
 // Sidebar initially hidden, shown on toggle
@@ -48,49 +40,62 @@ $(() => {
   });
 
  function eachFood(food) {
-    var $food = $("<div>").addClass("col-xs-18 col-sm-6 col-md-4");
-    var $thumbnail = $("<div>").addClass("thumbnail");
+    var $food = $("<div>").addClass("col-xs-18 col-sm-6 col-md-4 foodId").data('id', food.id);
+    var $thumbnail = $("<div>").addClass("thumbnail").data('id', food.id);
     var $foodImage = $("<img>").addClass("foodImage").attr("src", food.photo);
     var $caption = $("<div>").addClass("caption");
     var $foodName = $("<h4>").text(food.name);
     var $foodDescription = $("<p>").text(food.description);
     var $button = `<a href="#" class="btn btn-default btn-xs pull-right" role="button">
       <i class="glyphicon glyphicon-edit"></i>
-      </a> 
-      <a href="#" class="btn btn-info btn-xs" role="button">Button</a> 
-      <a href="#" class="btn btn-default btn-xs" role="button">Button</a>`;
+      </a>`; 
+    var $add = $("<button>").addClass("plus btn btn-info btn-xs").text("Add")
+    var $dec = $("<button>").addClass("minus btn btn-info btn-xs").text("Minus")
+
+    var $quantity = $("<span>").addClass("quantity").data('qty', 0);
+
 
     $food.append($thumbnail);
     $thumbnail.append($foodImage, $caption);
-    $caption.append($foodName, $foodDescription, $button);
+    $caption.append($foodName, $foodDescription, $add, $dec, $quantity, $button);
 
     return $food;
   }
 
+  $('#foodItems').on('click', '.plus', function(event) {
+    var $plus = $(this);
+    var $parent = $plus.parents('.thumbnail');
+    var $foodId = $parent.data('id');
+    var $quantity = $parent.find('.quantity');
+    var quantity = $quantity.data('qty');
+    quantity++;
+    $quantity.text(quantity);
+    $quantity.data('qty', quantity);
+  })
+
+    $('#foodItems').on('click', '.minus', function(event) {
+    var $plus = $(this);
+    var $parent = $plus.parents('.thumbnail');
+    var $foodId = $parent.data('id');
+    var $quantity = $parent.find('.quantity');
+    var quantity = $quantity.data('qty');
+    quantity--;
+    $quantity.text(quantity);
+    $quantity.data('qty', quantity);
+    // console.log($quantity.data('qty') );
+  })
+
 
 // Food Items Section of the Page (Individual)
-$.ajax({
-    method: "GET",
-    url: "/api/items"
-  }).done(function(items) {
-    console.log(items)
-    items.forEach(function(food) {
-      console.log("food",food);
-      var $foodsContainer = $("#foodItems");
-      $foodsContainer.append(eachFood(food));
-  
-// // Iterate each food entry
-//   function renderFoods(foods) {
-//     var $foodsContainer = $("#foodItems");
-//     // var foods = [1,2,3,4,5,6];
-//     // for (var item in foods) {
-//       var food = items[food];
-//       // var food = foods.length;
-//       $foodsContainer.append(eachFood(food));
-//     }
-//   }
-// renderFoods(foods);
-  
+  $.ajax({
+      method: "GET",
+      url: "/api/items"
+    }).done(function(items) {
+      console.log(items)
+      items.forEach(function(food) {
+        console.log("food",food);
+        var $foodsContainer = $("#foodItems");
+        $foodsContainer.append(eachFood(food));
     });
-});
+  });
 });
