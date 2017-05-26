@@ -1,4 +1,4 @@
-$(() => {
+// $(() => {
   // $.ajax({
   //   method: "GET",
   //   url: "/api/users"
@@ -26,7 +26,7 @@ $(() => {
     console.log("restos",restaurants);
     restaurants.forEach(function(restaurant) {
       console.log("resto",restaurant);
-      
+
       var $restaurantLogo = $("<img>").attr({
         id: "restaurantLogo",
         alt: "Restaurant Logo",
@@ -38,6 +38,8 @@ $(() => {
     $("#landingPage").append(landingPage(restaurant));
    });
   });
+  $("#landingPage").append(landingPage());
+
 
 // Sidebar initially hidden, shown on toggle
   $(".sidebar").hide();
@@ -56,8 +58,8 @@ $(() => {
     var $foodDescription = $("<p>").text(food.description);
     var $button = `<a href="#" class="btn btn-default btn-xs pull-right" role="button">
       <i class="glyphicon glyphicon-edit"></i>
-      </a> 
-      <a href="#" class="btn btn-info btn-xs" role="button">Button</a> 
+      </a>
+      <a href="#" class="btn btn-info btn-xs" role="button">Button</a>
       <a href="#" class="btn btn-default btn-xs" role="button">Button</a>`;
 
     $food.append($thumbnail);
@@ -66,6 +68,7 @@ $(() => {
 
     return $food;
   }
+
 
 
 // Food Items Section of the Page (Individual)
@@ -78,7 +81,7 @@ $.ajax({
       console.log("food",food);
       var $foodsContainer = $("#foodItems");
       $foodsContainer.append(eachFood(food));
-  
+
 // // Iterate each food entry
 //   function renderFoods(foods) {
 //     var $foodsContainer = $("#foodItems");
@@ -90,7 +93,8 @@ $.ajax({
 //     }
 //   }
 // renderFoods(foods);
-  
+
     });
 });
 });
+
