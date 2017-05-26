@@ -90,7 +90,7 @@ $(() => {
 function renderCart(order) {
   let html = "";
   order.lineItems.forEach(function (lineItem) {
-    html+=`<p>${lineItem.item.name}</p>`
+    html+=`<p>${lineItem.quantity} - ${lineItem.item.name}: ${lineItem.item.amount}</p>`
   })
   $('.yourOrder').html(html); // Added this class in sidebar for the cart
 }
