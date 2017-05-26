@@ -1,4 +1,4 @@
-$(() => {
+// $(() => {
   // $.ajax({
   //   method: "GET",
   //   url: "/api/users"
@@ -33,7 +33,7 @@ $(() => {
     return $row;
   }
 
-  $("#landingPage").append(landingPage()); 
+  $("#landingPage").append(landingPage());
 
 // Sidebar initially hidden, shown on toggle
   $(".sidebar").hide();
@@ -53,8 +53,8 @@ $(() => {
     var $foodDescription = $("<p>").text("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit");
     var $button = `<a href="#" class="btn btn-default btn-xs pull-right" role="button">
       <i class="glyphicon glyphicon-edit"></i>
-      </a> 
-      <a href="#" class="btn btn-info btn-xs" role="button">Button</a> 
+      </a>
+      <a href="#" class="btn btn-info btn-xs" role="button">Button</a>
       <a href="#" class="btn btn-default btn-xs" role="button">Button</a>`;
 
     $food.append($thumbnail);
@@ -77,4 +77,4 @@ $(() => {
 
   renderFoods();
 
-});
+};
