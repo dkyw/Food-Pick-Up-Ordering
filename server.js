@@ -33,14 +33,14 @@ app.use("/styles", sass({
   debug: true,
   outputStyle: 'expanded'
 }));
+
 app.use(express.static("public"));
 
-var accountSid = 'ACa36130d8f5d9f228af8a8f65714fb4c0'; // Your Account SID from www.twilio.com/console
-var authToken = 'dbf5cf5b54015e86c6b7d4318b403c0f';   // Your Auth Token from www.twilio.com/console
-var client = require('twilio')(
-  accountSid,
-  authToken
+var twilio = require('twilio');
 
+var client = require('twilio')(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
 );
 
 
@@ -49,12 +49,31 @@ app.use("/api/users", usersRoutes(knex));
 
 //client views
 
-// Home page
+//Home page -- view all orders
+
 app.get("/", (req, res) => {
   res.render("index");
 });
 
-checkout
+app.post('/orders/message', (req,res) => {
+  res.render('order')
+});
+
+app.post("/checkout", (req,res) => {
+  client.calls.create({
+    method: 'POST',
+    url: 'https://e31cd9d3.ngrok.io/orders/message',
+    from: "+17782007487",
+    to: "+16047823702",
+    // timeout: 12
+  }, function(err, call) {
+    console.log("call made");
+});
+  res.send("OK");
+});
+
+
+//checkout
 app.post("/checkout", (req,res) => {
   res.send('checkout');
 });
@@ -70,10 +89,12 @@ app.get("/orders/:id", (req,res) => {
   res.render('form');
 });
 
+
+
 app.post("/orders", (req,res) => {
   client.messages.create({
   from: "+17782007487",
-  to: "+17787823702",
+  to: "+16047823702",
   body: req.body.time
   }, function(err, message) {
     if(err) {
