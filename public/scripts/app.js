@@ -1,4 +1,4 @@
-// $(() => {
+$(() => {
   // $.ajax({
   //   method: "GET",
   //   url: "/api/users"
@@ -38,8 +38,6 @@
     $("#landingPage").append(landingPage(restaurant));
    });
   });
-  $("#landingPage").append(landingPage());
-
 
 // Sidebar initially hidden, shown on toggle
   $(".sidebar").hide();
@@ -49,16 +47,21 @@
     $(".sidebar").toggle("slide");
   });
 
+
+
  function eachFood(food) {
-    var $food = $("<div>").addClass("col-xs-18 col-sm-6 col-md-4");
+    var $food = $("<div>").addClass("foodItem col-xs-18 col-sm-6 col-md-4").data('id', food.id); // added .data to get food id
     var $thumbnail = $("<div>").addClass("thumbnail");
     var $foodImage = $("<img>").addClass("foodImage").attr("src", food.photo);
     var $caption = $("<div>").addClass("caption");
-    var $foodName = $("<h4>").text(food.name);
+    var $foodName = $("<h4>").text(food.name).addClass("nameOfItem");
     var $foodDescription = $("<p>").text(food.description);
-    var $button = `<a href="#" class="btn btn-default btn-xs pull-right" role="button">
-      <i class="glyphicon glyphicon-edit"></i>
-      </a>
+    var $button = $("<button>").addClass("toCart btn btn-default btn-xs pull-right").text("Add to Cart");
+
+    // `<a href="#" class="toCart btn btn-default btn-xs pull-right" role="button">
+    //   <i class="glyphicon glyphicon-edit"></i>
+    //   </a>`
+      var $add = `
       <a href="#" class="btn btn-info btn-xs" role="button">Button</a>
       <a href="#" class="btn btn-default btn-xs" role="button">Button</a>`;
 
@@ -66,16 +69,43 @@
     $thumbnail.append($foodImage, $caption);
     $caption.append($foodName, $foodDescription, $button);
 
+
+
+
     return $food;
   }
 
+  // Matches food item clicked with id and then pushes to object
+  $('#foodItems').on('click','.toCart', function(event) {
+    event.preventDefault();
+    var itemId = $(this).closest('.foodItem').data('id');
+    var item = globalItems.find(function (item) {
+      return itemId === item.id
+    });
+    globalOrder.lineItems.push({item: item, quantity: 1})
+    renderCart(globalOrder);
+  });
 
+// Adds the order to the cart on sidebar
+function renderCart(order) {
+  let html = "";
+  order.lineItems.forEach(function (lineItem) {
+    html+=`<p>${lineItem.item.name}</p>`
+  })
+  $('.yourOrder').html(html); // Added this class in sidebar for the cart
+}
+
+
+let globalOrder = {lineItems:[]};
+
+let globalItems = [];
 
 // Food Items Section of the Page (Individual)
 $.ajax({
     method: "GET",
     url: "/api/items"
   }).done(function(items) {
+    globalItems = items; // added for global variable
     console.log(items)
     items.forEach(function(food) {
       console.log("food",food);
@@ -97,4 +127,3 @@ $.ajax({
     });
 });
 });
-
