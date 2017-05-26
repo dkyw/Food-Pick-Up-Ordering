@@ -33,40 +33,76 @@ app.use("/styles", sass({
   debug: true,
   outputStyle: 'expanded'
 }));
+
 app.use(express.static("public"));
+
+var twilio = require('twilio');
+
+var client = require('twilio')(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
+
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 
 //client views
 
-// Home page
+//Home page -- view all orders
+
 app.get("/", (req, res) => {
   res.render("index");
 });
 
+app.post('/orders/message', (req,res) => {
+  res.render('order')
+});
+
+app.post("/checkout", (req,res) => {
+  client.calls.create({
+    method: 'POST',
+    url: 'https://e31cd9d3.ngrok.io/orders/message',
+    from: "+17782007487",
+    to: "+16047823702",
+    // timeout: 12
+  }, function(err, call) {
+    console.log("call made");
+});
+  res.send("OK");
+});
+
+
 //checkout
-app.post("/orders", (req,res) => {
+app.post("/checkout", (req,res) => {
   res.send('checkout');
 });
 
-//restaurant views
+
+// restaurant views
 
 app.get("/orders", (req,res) => {
   res.send('restaurant view');
 });
 
 app.get("/orders/:id", (req,res) => {
-  res.send('restauarnt view for individual orders');
-});
-
-
-app.post("/orders/:id", (req,res) => {
-  res.send('update orders here')
+  res.render('form');
 });
 
 
 
+app.post("/orders", (req,res) => {
+  client.messages.create({
+  from: "+17782007487",
+  to: "+16047823702",
+  body: req.body.time
+  }, function(err, message) {
+    if(err) {
+      console.error(err.message);
+    }
+  });
+  res.send('thanks!')
+});
 
 
 app.listen(PORT, () => {
