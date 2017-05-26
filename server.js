@@ -61,21 +61,13 @@ app.post('/orders/message', (req,res) => {
 
 app.post("/checkout", (req,res) => {
   client.calls.create({
-    method: 'POST',
-    url: 'https://e31cd9d3.ngrok.io/orders/message',
-    from: "+17782007487",
-    to: "+16047823702",
-    // timeout: 12
-  }, function(err, call) {
-    console.log("call made");
-});
-  res.send("OK");
-});
-
-
-//checkout
-app.post("/checkout", (req,res) => {
-  res.send('checkout');
+      method: 'POST',
+      url: 'https://9aa93036.ngrok.io/orders/message',
+      from: "+17782007487",
+      to: "+16047823702",
+    }, function(err, call) {
+      console.log("call made");
+  });
 });
 
 
