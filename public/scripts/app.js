@@ -7,25 +7,28 @@ $(() => {
   //     $("<div>").text(user.name).appendTo($("body"));
   //   }
   // });
-
-// Restaurant Logo
-  var $restaurantLogo = $("<img>").attr({
-    id: "restaurantLogo",
-    alt: "Restaurant Logo",
-    src: "https://nodejs.org/static/images/logos/nodejs-new-pantone-white.png",
-    width: "117",
-    length: "71"
-  });
-
-  $(".navbar-fixed-top .container").prepend($restaurantLogo);
-
-// Creating the Landing Page
+  $.ajax({
+    method: "GET",
+    url: "/api/restaurants"
+  }).done((restaurants) => {
+    restaurants.forEach((ele)=> {
+      console.log(typeof ele.logo)
+     
+    var $restaurantLogo = $("<img>").attr({
+      id: "restaurantLogo",
+      alt: "Restaurant Logo",
+      src: ele.logo,
+      width: "117",
+      length: "71"
+    });
+    $(".navbar-fixed-top .container").prepend($restaurantLogo);
+    
+  
   function landingPage() {
-    // var $landingPage = $("#landingPage");
     var $row = $("<div>").addClass("row");
     var $columnSize = $("<div>").addClass("col-md-6 col-sm-12");
-    var $restaurantName = $("<h1>").text("restoName");
-    var $restaurantDescription = $("<p>").text("Describe");
+    var $restaurantName = $("<h1>").text(ele.name);
+    var $restaurantDescription = $("<p>").text(ele.description);
 
     $row.append($columnSize);
     $columnSize.append($restaurantName, $restaurantDescription);
@@ -33,7 +36,40 @@ $(() => {
     return $row;
   }
 
-  $("#landingPage").append(landingPage()); 
+  $("#landingPage").append(landingPage());
+
+});
+
+  });
+
+
+
+// Restaurant Logo
+  // var $restaurantLogo = $("<img>").attr({
+  //   id: "restaurantLogo",
+  //   alt: "Restaurant Logo",
+  //   src: "https://nodejs.org/static/images/logos/nodejs-new-pantone-white.png",
+  //   width: "117",
+  //   length: "71"
+  // });
+
+  // $(".navbar-fixed-top .container").prepend($restaurantLogo);
+
+// Creating the Landing Page
+  // function landingPage() {
+  //   // var $landingPage = $("#landingPage");
+  //   var $row = $("<div>").addClass("row");
+  //   var $columnSize = $("<div>").addClass("col-md-6 col-sm-12");
+  //   var $restaurantName = $("<h1>").text("restoName");
+  //   var $restaurantDescription = $("<p>").text("Describe");
+
+  //   $row.append($columnSize);
+  //   $columnSize.append($restaurantName, $restaurantDescription);
+
+  //   return $row;
+  // }
+
+  // $("#landingPage").append(landingPage()); 
 
 // Sidebar initially hidden, shown on toggle
   $(".sidebar").hide();

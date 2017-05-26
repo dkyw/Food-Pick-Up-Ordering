@@ -45,7 +45,8 @@ var client = require('twilio')(
 
 
 // Mount all resource routes
-app.use("/api/users", usersRoutes(knex));
+// app.use("/api/users", usersRoutes(knex));
+app.use("/api/restaurants", usersRoutes(knex));
 
 //client views
 
