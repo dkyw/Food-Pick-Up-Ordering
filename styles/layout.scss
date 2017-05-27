@@ -10,12 +10,17 @@ body {
     }
 
     .order {
+      background-color: #8FBC7F;
+      border: 0.08em solid #72996C;
+      color: white;
+      font-family: 'Inconsolata', monospace;
       height: 3em;
       width: 8em;
       margin-top: 0.53em;
-      background-color: #8FBC7F;
-      color: white;
-      font-family: 'Inconsolata', monospace;
+    }
+
+    .order:hover {
+      color: black;
     }
   }
 
@@ -29,19 +34,19 @@ body {
     }
 
     .restaurant-description {
-      font-size: 1.5em;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
       font-family: 'Inconsolata', monospace;
+      font-size: 1.5em;
       margin-top: 10em;
       padding: 0.8em;
-      color: white;
-      background-color: rgba(0, 0, 0, 0.5);
 
     }
   }
 
   .toCart {
-    color: white;
     background-color: #72996C;
+    color: white;
     padding: 0.4em;
   }
 }
@@ -54,30 +59,39 @@ body {
 
   .sidebar {
     background-color: #ADDB94;
+    border: 0.25em solid white;
+    border-radius: 0.3em;
+    color: #333333;
     font-family: 'Inconsolata', monospace;
     font-size: 1.5em;
-    border: 0.35em solid white;
-    border-radius: 0.3em;
     height: 100em;
     opacity: 0.8;
-    color: #333333;
 
     .yourOrder {
-      height: 28em;
-      border: 0.3em solid white;
       background-color: white;
-    }
-
-    h5 {
-      font-size: 1em;
+      border: 0.3em solid white;
+      height: 28em;
     }
 
     .checkout {
       float: right;
     }
   }
-}
 
+  .foodItem {
+    font-family: 'Inconsolata', monospace;
+
+    .plus .minus {
+      height: 1em;
+      width: 1em;
+    }
+
+    .quantity {
+      font-size: 1.5em;
+      margin-left: 1em;
+    }
+  }
+}
 
 .hidden {
   display: none;
