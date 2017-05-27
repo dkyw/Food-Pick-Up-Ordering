@@ -24,7 +24,7 @@
         <!--NAVBAR "START"-->
       <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
-          <button type="button" class="btn btn-lg btn-success pull-right checkout">Checkout</button>
+          <button type="button" class="btn btn-lg btn-info pull-right order">Order</button>
         </div>
       </nav>
       <!--NAVBAR "END"-->
@@ -37,17 +37,20 @@
     <div class="top-buffer">
       <div class="col-md-3 sidebar pull-right">
         <div>
-          <h2>Your Cart</h2>
+          <h2>Your Cart:</h2>
         </div>
         <div class="yourOrder"></div>
-          <p>Total:</p>
-        </div>
+        <div id="totalAmount">
+          <h2>Total: </h2>
+          <h3 class="total"></h3>
+        </div> 
+        <button type="button" class="btn btn-lg btn-success pull-right checkout">Checkout</button>
+      </div>
         <div class="row" id="foodItems"></div>
      </div><!--/container -->
 <!--THUMBNAIL "END""-->
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </body>
 </html>
