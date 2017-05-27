@@ -20,6 +20,7 @@ const restaurantsRoutes = require("./routes/restaurants");
 const itemsRoutes = require("./routes/items");
 const ordersRoutes = require("./routes/orders");
 
+const twilio = require('./twilio');
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -61,21 +62,12 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.post('/orders/message', (req,res) => {
-  res.render('order')
+app.post("/checkout/message", (req,res) => {
+  res.render("message");
 });
 
 app.post("/checkout", (req,res) => {
-  client.calls.create({
-    method: 'POST',
-    url: 'https://e31cd9d3.ngrok.io/orders/message',
-    from: "+17782007487",
-    to: "+16047823702",
-    // timeout: 12
-  }, function(err, call) {
-    console.log("call made");
-    console.log("total",req.body.total);
-});
+  twilio.callRestaurants();
   console.log("total",req.body.total_amount);
 
   knex('orders')
@@ -102,19 +94,8 @@ app.get("/orders/:id", (req,res) => {
   res.render('form');
 });
 
-
-
 app.post("/orders", (req,res) => {
-  client.messages.create({
-  from: "+17782007487",
-  to: "+16047823702",
-  body: req.body.time
-  }, function(err, message) {
-    if(err) {
-      console.error(err.message);
-    }
-  });
-  res.send('thanks!')
+  twilio.sendSMS(req.body.time);
 });
 
 
