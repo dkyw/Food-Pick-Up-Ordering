@@ -97,23 +97,37 @@ $(() => {
     // Adds the order to the cart on sidebar
   function renderCart(order) {
     var html = "";
+    var total = 0;
     order.lineItems.forEach(function (lineItem) {
-      html+=`<p>${lineItem.quantity} - ${lineItem.item.name}: ${lineItem.item.amount}</p>`
+      var quantityAmount = lineItem.quantity * lineItem.item.amount;
+      html+=`<p>${lineItem.quantity} - ${lineItem.item.name}: ${quantityAmount}</p>`;
+      total += quantityAmount;
+      console.log(total);
+     
     })
     $('.yourOrder').html(html); // Added this class in sidebar for the cart
+    // TOTAL AMOUNT NEED 
+    total = Math.round(total * 100) / 100;
+    $("#totalAmount .total").text(total);
+
+
+
+
   }
 
+  
+  
+  
   // Food Items Section of the Page (Individual)
   $.ajax({
       method: "GET",
       url: "/api/items"
     }).done(function(items) {
       globalItems = items; // added for global variable
-      console.log(items)
       items.forEach(function(food) {
-        console.log("food",food);
         var $foodsContainer = $("#foodItems");
         $foodsContainer.append(eachFood(food));
       });
     });
+
 });
