@@ -18,6 +18,9 @@ const knexLogger  = require('knex-logger');
 // const usersRoutes = require("./routes/users");
 const restaurantsRoutes = require("./routes/restaurants");
 const itemsRoutes = require("./routes/items");
+const restaurantsOrders = require("./routes/orders")
+
+const twilio = require('./twilio')
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -38,18 +41,21 @@ app.use("/styles", sass({
 
 app.use(express.static("public"));
 
-var twilio = require('twilio');
+// var twilio = require('twilio');
 
-var client = require('twilio')(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
+// var client = require('twilio')(
+//   process.env.TWILIO_ACCOUNT_SID,
+//   process.env.TWILIO_AUTH_TOKEN
+// );
+
+
 
 
 // Mount all resource routes
 // app.use("/api/users", usersRoutes(knex));
 app.use("/api/restaurants", restaurantsRoutes(knex));
 app.use("/api/items", itemsRoutes(knex));
+app.use("/api/orders", restaurantsOrders(knex));
 
 //client views
 
@@ -59,21 +65,23 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.post('/orders/message', (req,res) => {
-  res.render('order')
+app.post('/orders/:id/message', (req,res) => {
+  res.render('message');
 });
 
 app.post("/checkout", (req,res) => {
-  client.calls.create({
-    method: 'POST',
-    url: 'https://e31cd9d3.ngrok.io/orders/message',
-    from: "+17782007487",
-    to: "+16047823702",
-    // timeout: 12
-  }, function(err, call) {
-    console.log("call made");
-});
-  res.send("OK");
+  twilio.callRestaurants();
+
+//   client.calls.create({
+//     method: 'POST',
+//     url: 'https://e31cd9d3.ngrok.io/orders/message',
+//     from: "+17782007487",
+//     to: "+16047823702",
+//     // timeout: 12
+//   }, function(err, call) {
+//     console.log("call made");
+// });
+//   res.send("OK");
 });
 
 
@@ -86,7 +94,7 @@ app.post("/checkout", (req,res) => {
 // restaurant views
 
 app.get("/orders", (req,res) => {
-  res.send('restaurant view');
+  res.render('orders');
 });
 
 app.get("/orders/:id", (req,res) => {
@@ -96,16 +104,19 @@ app.get("/orders/:id", (req,res) => {
 
 
 app.post("/orders", (req,res) => {
-  client.messages.create({
-  from: "+17782007487",
-  to: "+16047823702",
-  body: req.body.time
-  }, function(err, message) {
-    if(err) {
-      console.error(err.message);
-    }
-  });
-  res.send('thanks!')
+  twilio.sendSMS(req.body.time);
+  res.send('message sent')
+
+  // client.messages.create({
+  // from: "+17782007487",
+  // to: "+16047823702",
+  // body: req.body.time
+  // }, function(err, message) {
+  //   if(err) {
+  //     console.error(err.message);
+  //   }
+  // });
+  // res.send('thanks!')
 });
 
 
