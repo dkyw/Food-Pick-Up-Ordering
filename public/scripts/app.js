@@ -126,10 +126,10 @@ $(() => {
   }
 
   // Remove item from cart NOT WORKING WHEN YOU CLICK BUTTON
-  // $('#foodItems').on('click', '.remove', function(event) {
-  //   event.preventDefault();
-  //   $(this).closest('.item-line').remove();
-  // });
+  $('.yourOrder').on('click', '.remove', function(event) {
+    event.preventDefault();
+    $(this).closest('.item-line').remove();
+  });
 
   // Food Items Section of the Page (Individual)
   $.ajax({
