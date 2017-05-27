@@ -18,6 +18,7 @@ const knexLogger  = require('knex-logger');
 // const usersRoutes = require("./routes/users");
 const restaurantsRoutes = require("./routes/restaurants");
 const itemsRoutes = require("./routes/items");
+const ordersRoutes = require("./routes/orders");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -50,6 +51,7 @@ var client = require('twilio')(
 // app.use("/api/users", usersRoutes(knex));
 app.use("/api/restaurants", restaurantsRoutes(knex));
 app.use("/api/items", itemsRoutes(knex));
+app.use("/api/orders", ordersRoutes(knex));
 
 //client views
 
@@ -72,21 +74,28 @@ app.post("/checkout", (req,res) => {
     // timeout: 12
   }, function(err, call) {
     console.log("call made");
+    console.log("total",req.body.total);
 });
-  res.send("OK");
-});
+  console.log("total",req.body.total_amount);
 
+  knex('orders')
+    .insert({
+      status: "ordered",
+      total_amount: req.body.total,
+      user_id: 1
+    })
+    .then(function () {
+    res.redirect("/orders")
+    });
+  // res.send("OK");
 
-//checkout
-app.post("/checkout", (req,res) => {
-  res.send('checkout');
 });
 
 
 // restaurant views
 
 app.get("/orders", (req,res) => {
-  res.send('restaurant view');
+  res.render('orders');
 });
 
 app.get("/orders/:id", (req,res) => {
