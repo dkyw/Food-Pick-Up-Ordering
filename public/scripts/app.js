@@ -23,7 +23,7 @@ $(() => {
         width: "117",
         length: "71"
       });
-    $(".navbar-fixed-top .container").prepend($restaurantLogo);
+    $(".navbar-fixed-top .container").prepend($restaurantLogo).addClass("logo");
     $("#landingPage").append(landingPage(restaurant));
   });
 
@@ -47,7 +47,7 @@ $(() => {
     var $add = $("<button>").addClass("plus btn btn-info btn-xs").text("Add");
     var $dec = $("<button>").addClass("minus btn btn-info btn-xs").text("Minus");
     var $quantity = $("<span>").addClass("quantity").data('qty', 0);
-    var $button = $("<button>").addClass("toCart btn btn-default btn-xs pull-right").text("Add to Cart");
+    var $button = $("<button>").addClass("toCart btn btn-xs pull-right").text("Add to Cart");
 
     $food.append($thumbnail);
     $thumbnail.append($foodImage, $caption);
@@ -104,15 +104,15 @@ $(() => {
       html+=`<p>${lineItem.quantity} - ${lineItem.item.name}: ${quantityAmount}</p>`;
       total += quantityAmount;
       console.log(total);
-     
+
     })
     $('.yourOrder').html(html); // Added this class in sidebar for the cart
-    // TOTAL AMOUNT NEED 
+    // TOTAL AMOUNT NEED
     total = Math.round(total * 100) / 100;
     $("#totalAmount .total").text(total);
 
   }
-  
+
   // Food Items Section of the Page (Individual)
   $.ajax({
       method: "GET",

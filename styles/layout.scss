@@ -4,15 +4,22 @@ body {
   .navbar {
     height: 7em;
 
+    .logo {
+      margin-top: 0.9em;
+    }
+
     .order {
-      max-height: 6em;
-      max-width: 30em;
+      height: 3em;
+      width: 8em;
+      margin-top: 0.53em;
+      background-color: #8FBC7F;
+      color: white;
     }
   }
 
   .landing-page-text {
     color: white;
-    margin: 4em 0 0 1em;
+    margin: 5em 0 0 1em;
 
     .restaurant-name {
       font-size: 4em;
@@ -21,7 +28,17 @@ body {
     .restaurant-description {
       font-size: 1.5em;
       margin-top: 10em;
+      padding: 0.8em;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.4);
+
     }
+  }
+
+  .toCart {
+    color: white;
+    background-color: #72996C;
+    padding: 0.4em;
   }
 }
 
@@ -29,17 +46,31 @@ body {
   margin-top: 60rem;
 }
 
-.sidebar {
-  background-color: #ADDB94;
-  border: 0.5em solid white;
-  height: 100em;
+.top-buffer {
 
-  .yourOrder {
-    height: 30em;
-    border: 0.3em solid white;
-    background-color: white;
+  .sidebar {
+    background-color: #ADDB94;
+    border: 0.5em solid white;
+    height: 100em;
+    opacity: 0.8;
+    color: #333333;
+
+    .yourOrder {
+      height: 30em;
+      border: 0.3em solid white;
+      background-color: white;
+    }
+
+    .total {
+
+    }
+
+    .checkout {
+      float: right;
+    }
   }
 }
+
 
 .hidden {
   display: none;
