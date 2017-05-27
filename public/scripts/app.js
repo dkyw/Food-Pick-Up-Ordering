@@ -30,7 +30,7 @@ $(() => {
 
 // Sidebar initially hidden, shown on toggle
   $(".sidebar").hide();
-  $(".checkout").on("click", function(event) {
+  $(".order").on("click", function(event) {
     event.preventDefault();
     $(".sidebar").toggle("slide");
     $('body').scrollTop(1100);
