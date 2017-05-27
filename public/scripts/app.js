@@ -49,6 +49,7 @@ $(() => {
     var $quantity = $("<span>").addClass("quantity").data('qty', 0);
     var $button = $("<button>").addClass("toCart btn btn-xs pull-right").text("Add to Cart");
 
+
     $food.append($thumbnail);
     $thumbnail.append($foodImage, $caption);
     $caption.append($foodName, $foodPrice, $foodDescription, $add, $dec, $quantity, $button);
@@ -93,6 +94,8 @@ $(() => {
     var itemQty = $(this).siblings('.quantity').data('qty');
     globalOrder.lineItems.push({item: item, quantity: itemQty});
     renderCart(globalOrder);
+    $(".quantity").data('qty', 0).text(0);
+
   });
 
     // Adds the order to the cart on sidebar
@@ -101,17 +104,32 @@ $(() => {
     var total = 0;
     order.lineItems.forEach(function (lineItem) {
       var quantityAmount = lineItem.quantity * lineItem.item.amount;
-      html+=`<p>${lineItem.quantity} - ${lineItem.item.name}: ${quantityAmount}</p>`;
+
+      // NEW
+      // combineQuantity = 0;
+      // if (lineItem.item)
+
+      // END NEW
+      html+=`<div class='item-line'><p>${lineItem.quantity} - ${lineItem.item.name}: ${quantityAmount}</p><button class='remove btn btn-info btn-xs'>Remove</button></div>`;
       total += quantityAmount;
+
       console.log(total);
 
     })
+
     $('.yourOrder').html(html); // Added this class in sidebar for the cart
+
     // TOTAL AMOUNT NEED
     total = Math.round(total * 100) / 100;
-    $("#totalAmount .total").text(total);
+    $("#totalAmount .total").text(`$ ${total}`);
 
   }
+
+  // Remove item from cart NOT WORKING WHEN YOU CLICK BUTTON
+  // $('#foodItems').on('click', '.remove', function(event) {
+  //   event.preventDefault();
+  //   $(this).closest('.item-line').remove();
+  // });
 
   // Food Items Section of the Page (Individual)
   $.ajax({
@@ -124,5 +142,4 @@ $(() => {
         $foodsContainer.append(eachFood(food));
       });
     });
-
 });
