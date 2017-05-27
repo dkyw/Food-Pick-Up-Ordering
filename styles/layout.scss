@@ -1,5 +1,6 @@
 body {
   background-color: #EEE;
+  font-family: 'Inconsolata', monospace;
 
   .navbar {
     height: 7em;
@@ -14,6 +15,7 @@ body {
       margin-top: 0.53em;
       background-color: #8FBC7F;
       color: white;
+      font-family: 'Inconsolata', monospace;
     }
   }
 
@@ -22,15 +24,17 @@ body {
     margin: 5em 0 0 1em;
 
     .restaurant-name {
-      font-size: 4em;
+      font-family: 'Inconsolata', monospace;
+      font-size: 5em;
     }
 
     .restaurant-description {
       font-size: 1.5em;
+      font-family: 'Inconsolata', monospace;
       margin-top: 10em;
       padding: 0.8em;
       color: white;
-      background-color: rgba(0, 0, 0, 0.4);
+      background-color: rgba(0, 0, 0, 0.5);
 
     }
   }
@@ -50,19 +54,22 @@ body {
 
   .sidebar {
     background-color: #ADDB94;
-    border: 0.5em solid white;
+    font-family: 'Inconsolata', monospace;
+    font-size: 1.5em;
+    border: 0.35em solid white;
+    border-radius: 0.3em;
     height: 100em;
     opacity: 0.8;
     color: #333333;
 
     .yourOrder {
-      height: 30em;
+      height: 28em;
       border: 0.3em solid white;
       background-color: white;
     }
 
-    .total {
-
+    h5 {
+      font-size: 1em;
     }
 
     .checkout {
