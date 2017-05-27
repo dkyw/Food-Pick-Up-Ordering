@@ -25,7 +25,6 @@ $(() => {
       });
     $(".navbar-fixed-top .container").prepend($restaurantLogo);
     $("#landingPage").append(landingPage(restaurant));
-  //  });
   });
 
 // Sidebar initially hidden, shown on toggle
@@ -42,6 +41,7 @@ $(() => {
     var $foodImage = $("<img>").addClass("foodImage").attr("src", food.photo);
     var $caption = $("<div>").addClass("caption");
     var $foodName = $("<h4>").text(food.name).addClass("nameOfItem");
+    var $foodPrice = $("<h4>").text(`$ ${food.amount}`);
     var $foodDescription = $("<p>").text(food.description);
     var $add = $("<button>").addClass("plus btn btn-info btn-xs").text("Add");
     var $dec = $("<button>").addClass("minus btn btn-info btn-xs").text("Minus");
@@ -50,7 +50,7 @@ $(() => {
 
     $food.append($thumbnail);
     $thumbnail.append($foodImage, $caption);
-    $caption.append($foodName, $foodDescription, $add, $dec, $quantity, $button);
+    $caption.append($foodName, $foodPrice, $foodDescription, $add, $dec, $quantity, $button);
 
     return $food;
   }
@@ -69,8 +69,8 @@ $(() => {
 
 // Subtract to quantity
   $('#foodItems').on('click', '.minus', function(event) {
-    var $plus = $(this);
-    var $parent = $plus.parents('.thumbnail');
+    var $minus = $(this);
+    var $parent = $minus.parents('.thumbnail');
     var $foodId = $parent.data('id');
     var $quantity = $parent.find('.quantity');
     var quantity = $quantity.data('qty');
@@ -110,13 +110,7 @@ $(() => {
     total = Math.round(total * 100) / 100;
     $("#totalAmount .total").text(total);
 
-
-
-
   }
-
-  
-  
   
   // Food Items Section of the Page (Individual)
   $.ajax({
