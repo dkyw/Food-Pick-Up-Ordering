@@ -3,6 +3,11 @@ body {
 
   .navbar {
     height: 7em;
+
+    .order {
+      max-height: 6em;
+      max-width: 30em;
+    }
   }
 
   .landing-page-text {
