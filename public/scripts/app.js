@@ -81,7 +81,7 @@ $(() => {
 
   var globalOrder = {lineItems:[]};
   var globalItems = [];
- 
+
   // Matches food item clicked with id and then pushes to object
   $('#foodItems').on('click','.toCart', function(event) {
     event.preventDefault();
@@ -111,9 +111,11 @@ $(() => {
       globalItems = items; // added for global variable
       console.log(items)
       items.forEach(function(food) {
-        console.log("food",food);
         var $foodsContainer = $("#foodItems");
         $foodsContainer.append(eachFood(food));
       });
     });
-});
+
+}); //end
+
+
