@@ -89,6 +89,7 @@ $(() => {
     var item = globalItems.find(function (item) {
       return itemId === item.id
     });
+    console.log(item)
     var itemQty = $(this).siblings('.quantity').data('qty');
     globalOrder.lineItems.push({item: item, quantity: itemQty});
     renderCart(globalOrder);
