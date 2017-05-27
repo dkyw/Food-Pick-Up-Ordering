@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" class="full">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Order Food</title>
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!--External Layouts Custom CSS-->
+    <link rel="stylesheet" href="styles/landingPage.css">
+
+  </head>
+
+  <body>
+    <!--<h1>Hello World!</h1>-->
+        <!--NAVBAR "START"-->
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <button type="button" class="btn btn-lg btn-success pull-right checkout">Checkout</button>
+        </div>
+      </nav>
+      <!--NAVBAR "END"-->
+
+    <!-- Page Content -->
+    <div class="container" id="landingPage"></div>
+    <!-- /container -->
+
+<!--THUMBNAIL "START"" -->
+    <div class="top-buffer">
+      <div class="col-md-3 sidebar pull-right">
+        <div>
+          <h2>Your Cart</h2>
+        </div>
+        <div class="yourOrder"></div>
+          <p>Total:</p>
+        </div>
+        <div class="row" id="foodItems"></div>
+     </div><!--/container -->
+<!--THUMBNAIL "END""-->
+
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  </body>
+</html>
