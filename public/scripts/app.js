@@ -1,9 +1,9 @@
 $(() => {
   function landingPage(restaurant) {
     var $row = $("<div>").addClass("row");
-    var $columnSize = $("<div>").addClass("col-md-6 col-sm-12");
-    var $restaurantName = $("<h1>").text(restaurant.name);
-    var $restaurantDescription = $("<p>").text(restaurant.description);
+    var $columnSize = $("<div>").addClass("col-md-6 col-sm-12 landing-page-text");
+    var $restaurantName = $("<h1>").text(restaurant.name).addClass("restaurant-name");
+    var $restaurantDescription = $("<p>").text(restaurant.description).addClass("restaurant-description");
 
     $row.append($columnSize);
     $columnSize.append($restaurantName, $restaurantDescription);
@@ -29,9 +29,10 @@ $(() => {
 
 // Sidebar initially hidden, shown on toggle
   $(".sidebar").hide();
-  $(".checkout").on("click", function(event) {
+  $(".order").on("click", function(event) {
     event.preventDefault();
     $(".sidebar").toggle("slide");
+    $('body').scrollTop(1100);
   });
 
 // Function for each food item
