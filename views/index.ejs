@@ -44,7 +44,9 @@
           <h2>Total: </h2>
           <h3 class="total"></h3>
         </div> 
-        <button type="button" class="btn btn-lg btn-success pull-right checkout">Checkout</button>
+        <form action="/checkout" method="POST" class="checkoutForm">
+          <input type="submit" class="btn btn-lg btn-success pull-right checkout" value="Checkout"></input>
+        </form>
       </div>
         <div class="row" id="foodItems"></div>
      </div><!--/container -->
