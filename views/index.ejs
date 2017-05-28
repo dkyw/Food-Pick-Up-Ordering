@@ -46,11 +46,15 @@
           <h3 class="total"></h3>
         </div> 
         <form action="/checkout" method="POST" class="checkoutForm">
+          <label for="userName">Name: </label>
+          <input type="text required" name="userName" class="userName form-control"></input>
+          <label for="userPhone">Phone #: </label>
+          <input type="text" name="userPhone" class="userPhone form-control" value="+1"></input> 
           <input type="submit" class="btn btn-lg btn-success pull-right checkout" value="Checkout"></input>
         </form>
       </div>
         <div class="row" id="foodItems"></div>
-     </div><!--/container -->
+     </div>
 <!--THUMBNAIL "END""-->
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>

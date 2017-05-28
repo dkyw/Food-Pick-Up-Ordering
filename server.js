@@ -15,7 +15,7 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
 // Seperated Routes for each Resource
-// const usersRoutes = require("./routes/users");
+const usersRoutes = require("./routes/users");
 const restaurantsRoutes = require("./routes/restaurants");
 const itemsRoutes = require("./routes/items");
 const ordersRoutes = require("./routes/orders");
@@ -49,7 +49,7 @@ var client = require('twilio');
 
 
 // Mount all resource routes
-// app.use("/api/users", usersRoutes(knex));
+app.use("/api/users", usersRoutes(knex));
 app.use("/api/restaurants", restaurantsRoutes(knex));
 app.use("/api/items", itemsRoutes(knex));
 app.use("/api/orders", ordersRoutes(knex));
@@ -67,17 +67,24 @@ app.post("/checkout/message", (req,res) => {
 });
 
 app.post("/checkout", (req,res) => {
-  twilio.callRestaurants();
-
-  knex('orders')
+  // twilio.callRestaurants();
+// COMMENTED DURING DEV
+  knex('users')
     .insert({
-      status: "ordered",
-      total_amount: req.body.lastTotalAmount,
-      user_id: 1
+      phone_number: req.body.userPhone,
+      user_name: req.body.userName
     })
-    .then(function () {
-    res.redirect("/orders")
-    });
+  .then(function () {
+    knex('orders')
+      .insert({
+        status: "ordered",
+        total_amount: req.body.lastTotalAmount,
+        user_id: knex.select('id').from('users').where('user_name', req.body.userName)
+      })
+      .then(function () {
+        res.redirect("/orders")
+      });
+  });
 });
 
 // restaurant views
