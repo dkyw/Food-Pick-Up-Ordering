@@ -70,11 +70,11 @@ app.post("/checkout/message", (req,res) => {
 
 
 function requestBody(user) {
-  var userId = knex.select('id').from('users').where('user_name', user);
+  let userId = knex.select('id').from('users').where('user_name', user);
   return userId;
 }
 
-var orderId = knex.select('id').from('orders');
+let orderId = knex.select('id').from('orders');
 
 app.post("/checkout", (req,res) => {
   // twilio.callRestaurants();
@@ -92,17 +92,26 @@ app.post("/checkout", (req,res) => {
       user_id: requestBody(req.body.userName)
     })
     .then(function () {
-      knex('orders_items')
-      .insert({
-        order_id: orderId.where('user_id',requestBody(req.body.userName)),
-        item_id: knex.select('id').from('items').where('name',req.body.item),
-        quantity: req.body.quantity
-      })
-      .then(function () {
-        res.redirect("/orders")
-      });
+      console.log(req.body.item, req.body.quantity);
+      console.log("length",req.body.item.length);
+      let item = req.body.item;
+      let qty = req.body.quantity;
+      let staging = [];
+      item.map(function (ele,index) {
+        staging.push([ele,qty[index]]);   
+      });console.log("outside for",req.body.userName);
+      for (let i = 0; i < staging.length; i++) {
+        console.log("inside for",req.body.userName);
+        knex('orders_items')
+        .insert({
+          order_id: orderId.where('user_id',requestBody(req.body.userName)),
+          item_id: knex.select('id').from('items').where('name',item[i]),
+          quantity: qty[i]
+        })
+        .then({})
+        }
     });
-  });
+  }); res.redirect("/orders")
 });
 
 // restaurant views
