@@ -92,10 +92,19 @@ app.post("/checkout", (req,res) => {
       user_id: requestBody(req.body.userName)
     })
     .then(function () {
-      console.log(req.body.item, req.body.quantity);
-      console.log("length",req.body.item.length);
+      // console.log(req.body.item, req.body.quantity);
+      // console.log("length",req.body.item.length);
       let item = req.body.item;
       let qty = req.body.quantity;
+      if (typeof([]) !== typeof(req.body.item)) {
+        knex('orders_items')
+        .insert({
+          order_id: orderId.where('user_id',requestBody(req.body.userName)),
+          item_id: knex.select('id').from('items').where('name',item),
+          quantity: qty
+        })
+        .then({})
+      } else {
       let staging = [];
       item.map(function (ele,index) {
         staging.push([ele,qty[index]]);   
@@ -109,9 +118,9 @@ app.post("/checkout", (req,res) => {
           quantity: qty[i]
         })
         .then({})
-        }
-    });
-  }); res.redirect("/orders")
+        }}
+    });res.redirect("/orders")
+  }); 
 });
 
 // restaurant views
