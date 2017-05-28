@@ -18,6 +18,7 @@ const knexLogger  = require('knex-logger');
 // const usersRoutes = require("./routes/users");
 const restaurantsRoutes = require("./routes/restaurants");
 const itemsRoutes = require("./routes/items");
+const ordersRoutes = require("./routes/orders");
 
 
 const twilio = require('./twilio');
