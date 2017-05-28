@@ -76,6 +76,9 @@ $(() => {
     var $quantity = $parent.find('.quantity');
     var quantity = $quantity.data('qty');
     quantity--;
+    if (quantity < 0) {
+      event.unbind();
+    }
     $quantity.text(quantity);
     $quantity.data('qty', quantity);
   });
@@ -137,6 +140,9 @@ $(() => {
       return itemId === item.id
     });
     var itemQty = $(this).siblings('.quantity').data('qty');
+    if (itemQty <= 0) {
+      event.off();
+    }
     globalOrder.lineItems.push({item: item, quantity: itemQty});
     renderCart(globalOrder);
     $(".quantity").data('qty', 0).text(0);
