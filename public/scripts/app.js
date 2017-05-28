@@ -85,28 +85,48 @@ $(() => {
  
    // Adds the order to the cart on sidebar
   function renderCart(order) {
+    var obj = {}
     var html = "";
     var total = 0;
     order.lineItems.forEach(function (lineItem) {
       var quantityAmount = lineItem.quantity * lineItem.item.amount;
       html+=`<p>${lineItem.quantity} - ${lineItem.item.name}: ${quantityAmount}</p>`;
       total += quantityAmount;
+      obj = {
+        item: lineItem.item.name,
+        quantity: lineItem.quantity
+      };
+      return obj;
     })
     $('.yourOrder').html(html); // Added this class in sidebar for the cart
     // TOTAL AMOUNT NEED 
     total = Math.round(total * 100) / 100;
     $("#totalAmount .total").text(`$ ${total}`);
-
+    // Total amount used to req amount
     var $hiddenAmount = $("<input>").attr({
       type: "hidden",
       value: total,
       name: "totalAmount",
       class: "hiddenTotalAmount"
     });
-    $(".checkoutForm").append($hiddenAmount);
+    $(".checkDivForm").append($hiddenAmount);
     $($hiddenAmount).last().attr({name: "lastTotalAmount"});
     $($hiddenAmount).last().prev().attr({name: "TotalAmount"});
-    // console.log($hiddenAmount.val());
+    // console.log(obj);
+    // Use for req item and quantity
+    var $hiddenItem = $("<input>").attr({
+      type: "hidden",
+      value: obj.item,
+      name: "item",
+      class: "hiddenItem"
+    });
+    var $hiddenQuantity = $("<input>").attr({
+      type: "hidden",
+      value: obj.quantity,
+      name: "quantity",
+      class: "hiddenQuantity"
+    });
+    $(".order_itemDivForm").append($hiddenItem, $hiddenQuantity);
   }
 
   // Matches food item clicked with id and then pushes to object
@@ -134,7 +154,7 @@ $(() => {
       });
     });
 
-    
+
 
 
 });

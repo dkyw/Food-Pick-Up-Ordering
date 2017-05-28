@@ -19,6 +19,7 @@ const usersRoutes = require("./routes/users");
 const restaurantsRoutes = require("./routes/restaurants");
 const itemsRoutes = require("./routes/items");
 const ordersRoutes = require("./routes/orders");
+const orders_itemsRoutes = require("./routes/orders_items");
 
 const twilio = require('./twilio');
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -53,6 +54,7 @@ app.use("/api/users", usersRoutes(knex));
 app.use("/api/restaurants", restaurantsRoutes(knex));
 app.use("/api/items", itemsRoutes(knex));
 app.use("/api/orders", ordersRoutes(knex));
+app.use("/api/orders_items", orders_itemsRoutes(knex));
 
 //client views
 
@@ -66,24 +68,40 @@ app.post("/checkout/message", (req,res) => {
   res.render("message");
 });
 
+
+function requestBody(user) {
+  var userId = knex.select('id').from('users').where('user_name', user);
+  return userId;
+}
+
+var orderId = knex.select('id').from('orders');
+
 app.post("/checkout", (req,res) => {
   // twilio.callRestaurants();
 // COMMENTED DURING DEV
   knex('users')
-    .insert({
-      phone_number: req.body.userPhone,
-      user_name: req.body.userName
-    })
+  .insert({
+    phone_number: req.body.userPhone,
+    user_name: req.body.userName
+  })
   .then(function () {
     knex('orders')
+    .insert({
+      status: "ordered",
+      total_amount: req.body.lastTotalAmount,
+      user_id: requestBody(req.body.userName)
+    })
+    .then(function () {
+      knex('orders_items')
       .insert({
-        status: "ordered",
-        total_amount: req.body.lastTotalAmount,
-        user_id: knex.select('id').from('users').where('user_name', req.body.userName)
+        order_id: orderId.where('user_id',requestBody(req.body.userName)),
+        item_id: knex.select('id').from('items').where('name',req.body.item),
+        quantity: req.body.quantity
       })
       .then(function () {
         res.redirect("/orders")
       });
+    });
   });
 });
 
