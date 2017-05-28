@@ -68,21 +68,17 @@ app.post("/checkout/message", (req,res) => {
 
 app.post("/checkout", (req,res) => {
   twilio.callRestaurants();
-  console.log("total");
 
   knex('orders')
     .insert({
       status: "ordered",
-      total_amount: req.body.total,
+      total_amount: req.body.lastTotalAmount,
       user_id: 1
     })
     .then(function () {
     res.redirect("/orders")
     });
-  // res.send("OK");
-
 });
-
 
 // restaurant views
 
@@ -97,7 +93,6 @@ app.get("/orders/:id", (req,res) => {
 app.post("/orders", (req,res) => {
   twilio.sendSMS(req.body.time);
 });
-
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

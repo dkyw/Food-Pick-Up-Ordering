@@ -85,30 +85,28 @@ $(() => {
  
    // Adds the order to the cart on sidebar
   function renderCart(order) {
-    var ordersObject = {};
     var html = "";
     var total = 0;
     order.lineItems.forEach(function (lineItem) {
       var quantityAmount = lineItem.quantity * lineItem.item.amount;
-      // NEW NOTE: IF NOT WORKING, COMMENT
-      // combineQuantity = 0;
-      // if (lineItem.item);
-
-      // END NEW NOTE
       html+=`<p>${lineItem.quantity} - ${lineItem.item.name}: ${quantityAmount}</p>`;
       total += quantityAmount;
-      return ordersObject = {
-            quantity: lineItem.quantity,
-            name: lineItem.item.name,     
-          };
     })
     $('.yourOrder').html(html); // Added this class in sidebar for the cart
     // TOTAL AMOUNT NEED 
     total = Math.round(total * 100) / 100;
     $("#totalAmount .total").text(`$ ${total}`);
-    // console.log("obj",obj);
-    // ordersObject.currentTotalAmount = total;
-    return ordersObject;
+
+    var $hiddenAmount = $("<input>").attr({
+      type: "hidden",
+      value: total,
+      name: "totalAmount",
+      class: "hiddenTotalAmount"
+    });
+    $(".checkoutForm").append($hiddenAmount);
+    $($hiddenAmount).last().attr({name: "lastTotalAmount"});
+    $($hiddenAmount).last().prev().attr({name: "TotalAmount"});
+    // console.log($hiddenAmount.val());
   }
 
   // Matches food item clicked with id and then pushes to object
