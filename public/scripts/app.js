@@ -23,7 +23,7 @@ $(() => {
         width: "117",
         length: "71"
       });
-    $(".navbar-fixed-top .container").prepend($restaurantLogo);
+    $(".navbar-fixed-top .container").prepend($restaurantLogo).addClass("logo");
     $("#landingPage").append(landingPage(restaurant));
   });
 
@@ -42,12 +42,12 @@ $(() => {
     var $foodImage = $("<img>").addClass("foodImage").attr("src", food.photo);
     var $caption = $("<div>").addClass("caption");
     var $foodName = $("<h4>").text(food.name).addClass("nameOfItem");
-    var $foodPrice = $("<h4>").text(`$ ${food.amount}`);
+    var $foodPrice = $("<h4>").text(`$ ${food.amount}`).addClass("food-price");
     var $foodDescription = $("<p>").text(food.description);
     var $add = $("<button>").addClass("plus btn btn-info btn-xs").text("Add");
     var $dec = $("<button>").addClass("minus btn btn-info btn-xs").text("Minus");
     var $quantity = $("<span>").addClass("quantity").data('qty', 0).text(0);
-    var $button = $("<button>").addClass("toCart btn btn-default btn-xs pull-right").text("Add to Cart");
+    var $button = $("<button>").addClass("toCart btn btn-xs pull-right").text("Add to Cart");
 
     $food.append($thumbnail);
     $thumbnail.append($foodImage, $caption);
