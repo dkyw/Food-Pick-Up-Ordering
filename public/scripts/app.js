@@ -72,6 +72,7 @@ $(() => {
 // Subtract to quantity
   $('#foodItems').on('click', '.minus', function(event) {
     var $minus = $(this);
+    console.log(this);
     var $parent = $minus.parents('.thumbnail');
     var $foodId = $parent.data('id');
     var $quantity = $parent.find('.quantity');
@@ -89,6 +90,7 @@ $(() => {
     event.preventDefault();
     var itemId = $(this).closest('.foodItem').data('id');
     var item = globalItems.find(function (item) {
+    // console.log(item);
       return itemId === item.id
     });
     var itemQty = $(this).siblings('.quantity').data('qty');
@@ -98,38 +100,52 @@ $(() => {
 
   });
 
+
     // Adds the order to the cart on sidebar
   function renderCart(order) {
     var html = "";
     var total = 0;
+    var quantityAmount;
+
     order.lineItems.forEach(function (lineItem) {
-      var quantityAmount = lineItem.quantity * lineItem.item.amount;
+      quantityAmount = lineItem.quantity * lineItem.item.amount;
 
       // NEW
       // combineQuantity = 0;
       // if (lineItem.item)
 
       // END NEW
+
       html+=`<div class='item-line'><p>${lineItem.quantity} - ${lineItem.item.name}: ${quantityAmount}</p><button class='remove btn btn-info btn-xs'>Remove</button></div>`;
+
       total += quantityAmount;
 
-      console.log(total);
+    });
+    // console.log("total", total);
 
-    })
 
     $('.yourOrder').html(html); // Added this class in sidebar for the cart
+
 
     // TOTAL AMOUNT NEED
     total = Math.round(total * 100) / 100;
     $("#totalAmount .total").text(`$ ${total}`);
 
+
+    $('.yourOrder').on('click', '.remove', function(event) {
+      event.preventDefault();
+      console.log("total", total);
+      // console.log("quantity amount", quantityAmount);
+      var newTotal = total - quantityAmount;
+      newTotal = Math.round(newTotal * 100) / 100;
+      $("#totalAmount .total").text(`$ ${newTotal}`);
+      $(this).closest('.item-line').remove();
+      console.log("quantityamount", quantityAmount);
+    });
   }
 
-  // Remove item from cart NOT WORKING WHEN YOU CLICK BUTTON
-  $('.yourOrder').on('click', '.remove', function(event) {
-    event.preventDefault();
-    $(this).closest('.item-line').remove();
-  });
+
+    // console.log(globalOrder.lineItems[0].item);
 
   // Food Items Section of the Page (Individual)
   $.ajax({
