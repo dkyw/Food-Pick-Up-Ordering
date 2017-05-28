@@ -82,6 +82,34 @@ $(() => {
 
   var globalOrder = {lineItems:[]};
   var globalItems = [];
+ 
+   // Adds the order to the cart on sidebar
+  function renderCart(order) {
+    var ordersObject = {};
+    var html = "";
+    var total = 0;
+    order.lineItems.forEach(function (lineItem) {
+      var quantityAmount = lineItem.quantity * lineItem.item.amount;
+      // NEW NOTE: IF NOT WORKING, COMMENT
+      // combineQuantity = 0;
+      // if (lineItem.item);
+
+      // END NEW NOTE
+      html+=`<p>${lineItem.quantity} - ${lineItem.item.name}: ${quantityAmount}</p>`;
+      total += quantityAmount;
+      return ordersObject = {
+            quantity: lineItem.quantity,
+            name: lineItem.item.name,     
+          };
+    })
+    $('.yourOrder').html(html); // Added this class in sidebar for the cart
+    // TOTAL AMOUNT NEED 
+    total = Math.round(total * 100) / 100;
+    $("#totalAmount .total").text(`$ ${total}`);
+    // console.log("obj",obj);
+    // ordersObject.currentTotalAmount = total;
+    return ordersObject;
+  }
 
   // Matches food item clicked with id and then pushes to object
   $('#foodItems').on('click','.toCart', function(event) {
@@ -90,34 +118,12 @@ $(() => {
     var item = globalItems.find(function (item) {
       return itemId === item.id
     });
-    console.log(item)
     var itemQty = $(this).siblings('.quantity').data('qty');
     globalOrder.lineItems.push({item: item, quantity: itemQty});
     renderCart(globalOrder);
     $(".quantity").data('qty', 0).text(0);
   });
-
-    // Adds the order to the cart on sidebar
-  function renderCart(order) {
-    var html = "";
-    var total = 0;
-    order.lineItems.forEach(function (lineItem) {
-      var quantityAmount = lineItem.quantity * lineItem.item.amount;
-      // NEW
-      // combineQuantity = 0;
-      // if (lineItem.item)
-
-      // END NEW
-      html+=`<p>${lineItem.quantity} - ${lineItem.item.name}: ${quantityAmount}</p>`;
-      total += quantityAmount;
-    })
-    $('.yourOrder').html(html); // Added this class in sidebar for the cart
-    // TOTAL AMOUNT NEED
-    total = Math.round(total * 100) / 100;
-    $("#totalAmount .total").text(`$ ${total}`);
-
-  }
-
+ 
   // Food Items Section of the Page (Individual)
   $.ajax({
       method: "GET",
@@ -130,6 +136,5 @@ $(() => {
       });
     });
 
-}); //end
 
-
+});

@@ -18,9 +18,12 @@ const knexLogger  = require('knex-logger');
 // const usersRoutes = require("./routes/users");
 const restaurantsRoutes = require("./routes/restaurants");
 const itemsRoutes = require("./routes/items");
-const restaurantsOrders = require("./routes/orders")
 
-const twilio = require('./twilio')
+
+const twilio = require('./twilio');
+// Load the logger first so all (static) HTTP requests are logged to STDOUT
+// 'dev' = Concise output colored by response status for development use.
+//         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 
 app.use(morgan('dev'));
 
@@ -43,7 +46,8 @@ var client = require('twilio');
 // Mount all resource routes
 app.use("/api/restaurants", restaurantsRoutes(knex));
 app.use("/api/items", itemsRoutes(knex));
-app.use("/api/orders", restaurantsOrders(knex));
+app.use("/api/orders", ordersRoutes(knex));
+
 
 //client views
 
@@ -59,6 +63,20 @@ app.post("/checkout/message", (req,res) => {
 
 app.post("/checkout", (req,res) => {
   twilio.callRestaurants();
+
+  console.log("total");
+
+  knex('orders')
+    .insert({
+      status: "ordered",
+      total_amount: req.body.total,
+      user_id: 1
+    })
+    .then(function () {
+    res.redirect("/orders")
+    });
+  // res.send("OK");
+
 });
 
 // restaurant views
@@ -70,8 +88,6 @@ app.get("/orders", (req,res) => {
 app.get("/orders/:id", (req,res) => {
   res.render('form');
 });
-
-
 
 app.post("/orders", (req,res) => {
   twilio.sendSMS(req.body.time);
