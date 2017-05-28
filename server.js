@@ -40,12 +40,12 @@ app.use("/styles", sass({
 
 app.use(express.static("public"));
 
-var twilio = require('twilio');
+var client = require('twilio');
 
-var client = require('twilio')(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
+// var client = require('twilio')(
+//   process.env.TWILIO_ACCOUNT_SID,
+//   process.env.TWILIO_AUTH_TOKEN
+// );
 
 
 // Mount all resource routes
@@ -68,7 +68,7 @@ app.post("/checkout/message", (req,res) => {
 
 app.post("/checkout", (req,res) => {
   twilio.callRestaurants();
-  console.log("total",req.body.total_amount);
+  console.log("total");
 
   knex('orders')
     .insert({

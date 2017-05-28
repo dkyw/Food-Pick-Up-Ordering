@@ -122,31 +122,6 @@ $(() => {
     globalOrder.lineItems.push({item: item, quantity: itemQty});
     renderCart(globalOrder);
     $(".quantity").data('qty', 0).text(0);
-    // var callOrdersObject = renderCart(globalOrder);
-    // $('.checkout').on('click', function(event) {
-    //   console.log(callOrdersObject.name,callOrdersObject.quantity);
-    //   event.preventDefault();
-    //   $.ajax({
-    //     method: "POST",
-    //     url: "/checkout"
-    //   }).done(function() {
-      //   var orders = {
-      //     status: "ordered",
-      //     total_amount: $(".total").val(),
-      //     user_id: 1
-      //   }
-      //   $.ajax({
-      //     method: 'POST',
-      //     url: "/api/orders",
-      //     dataType: "json",
-      //     data: orders
-      // }).done(function(data) {
-      //   console.log(data);
-      // });
-
-      // });
-
-    // });
   });
  
   // Food Items Section of the Page (Individual)
