@@ -16,14 +16,14 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!--External Layouts Custom CSS-->
-    <link rel="stylesheet" href="styles/landingPage.scss">
+    <link rel="stylesheet" href="/styles/landingPage.css">
   </head>
   <body>
-    <h3>Preparation Time:</h3>
-    <form action="/orders" method="POST">
+    <h1>Preparation Time:</h1>
+    <form action="/orders" method="POST" class="formMinutes">
       <label for="time">Time in minutes: </label>
       <input id="time" name="time" style="width: 150px" placeholder=" minutes">
-      <button>Submit</button>
+      <button class="button-success btn-lg">Submit</button>
     </form>
   </body>
 </html>
