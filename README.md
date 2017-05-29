@@ -10,8 +10,8 @@ When an order is placed the restaurant is phoned and the order is read out to th
 
 !["screenshot of main index page"](https://github.com/ervinlouieong/Food-Pick-up-Ordering/blob/master/docs/screenshot%20of%20main%20index%20page.png)
 !["screenshot of the menu with sliding Order/Cart sidebar in the main index page"](https://github.com/ervinlouieong/Food-Pick-up-Ordering/blob/master/docs/screenshot%20of%20the%20menu%20with%20sliding%20Order:Cart%20sidebar%20in%20the%20main%20index%20page.png)
-!["screenshot of the summary of orders page"](https://github.com/ervinlouieong/Food-Pick-up-Ordering/blob/master/docs/screenshot%20of%20the%20sample%20specific%20orders%20page.png)
-!["screenshot of the sample specific orders page"](https://github.com/ervinlouieong/Food-Pick-up-Ordering/blob/master/docs/screenshot%20of%20the%20summary%20of%20orders%20page.png)
+!["screenshot of the summary of orders page"](https://github.com/ervinlouieong/Food-Pick-up-Ordering/blob/master/docs/screenshot%20of%20the%20summary%20of%20orders%20page.png)
+!["screenshot of the sample specific orders page"](https://github.com/ervinlouieong/Food-Pick-up-Ordering/blob/master/docs/screenshot%20of%20the%20sample%20specific%20orders%20page.png)
 
 ## Getting Started
 
