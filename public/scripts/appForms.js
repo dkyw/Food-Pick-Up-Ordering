@@ -2,11 +2,9 @@ $(() => {
 
   var orderUrlId = document.URL.toString().slice(29);
 
-
   $.ajax({
     method: "GET",
     url: "/api/orders_items"
-    // async: false,
   })
   .done(function(orders_items) {
     for (order of orders_items) {
