@@ -160,7 +160,12 @@ $(() => {
       });
     });
 
-
-
+  $(function() {
+    $(".checkout").click(function(){
+      if (confirm("Do you want to submit your order?")){
+         $('.checkout').submit();
+      }
+    });
+  });
 
 });
