@@ -77,7 +77,7 @@ app.post("/checkout", (req,res) => {
   .insert({
     phone_number: req.body.userPhone,
     user_name: req.body.userName
-  })
+  }) 
   .then(function () {
     knex('orders')
     .insert({
@@ -113,7 +113,9 @@ app.post("/checkout", (req,res) => {
         })
         .then({})
         }}
-    });res.redirect("/orders")
+    });
+    // res.redirect("/orders")
+    res.redirect("/")
   }); 
 });
 
@@ -135,3 +137,5 @@ app.post("/orders", (req,res) => {
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
+
+// console.log("TEST");
