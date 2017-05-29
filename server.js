@@ -100,14 +100,9 @@ app.post("/checkout", (req,res) => {
       } else {
       let staging = [];
       item.map(function (ele,index) {
-<<<<<<< HEAD
         staging.push([ele,qty[index]]);   
       });
       // console.log("outside for",req.body.userName);
-=======
-        staging.push([ele,qty[index]]);
-      });console.log("outside for",req.body.userName);
->>>>>>> 51f3c92e0a3b3dfd7a280fdaf6b0d0965bde9e19
       for (let i = 0; i < staging.length; i++) {
         // console.log("inside for",req.body.userName);
         knex('orders_items')
