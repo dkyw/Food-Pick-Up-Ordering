@@ -43,12 +43,6 @@ app.use(express.static("public"));
 
 var client = require('twilio');
 
-// var client = require('twilio')(
-//   process.env.TWILIO_ACCOUNT_SID,
-//   process.env.TWILIO_AUTH_TOKEN
-// );
-
-
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 app.use("/api/restaurants", restaurantsRoutes(knex));
@@ -77,13 +71,13 @@ function requestBody(user) {
 let orderId = knex.select('id').from('orders');
 
 app.post("/checkout", (req,res) => {
-  // twilio.callRestaurants();
+  twilio.callRestaurants();
 // COMMENTED DURING DEV
   knex('users')
   .insert({
     phone_number: req.body.userPhone,
     user_name: req.body.userName
-  })
+  }) 
   .then(function () {
     knex('orders')
     .insert({
@@ -92,16 +86,25 @@ app.post("/checkout", (req,res) => {
       user_id: requestBody(req.body.userName)
     })
     .then(function () {
-      console.log(req.body.item, req.body.quantity);
-      console.log("length",req.body.item.length);
+      // console.log("USERNAME",req.body.userName);
       let item = req.body.item;
       let qty = req.body.quantity;
+      if (typeof([]) !== typeof(req.body.item)) {
+        knex('orders_items')
+        .insert({
+          order_id: orderId.where('user_id',requestBody(req.body.userName)),
+          item_id: knex.select('id').from('items').where('name',item),
+          quantity: qty
+        })
+        .then({})
+      } else {
       let staging = [];
       item.map(function (ele,index) {
         staging.push([ele,qty[index]]);   
-      });console.log("outside for",req.body.userName);
+      });
+      // console.log("outside for",req.body.userName);
       for (let i = 0; i < staging.length; i++) {
-        console.log("inside for",req.body.userName);
+        // console.log("inside for",req.body.userName);
         knex('orders_items')
         .insert({
           order_id: orderId.where('user_id',requestBody(req.body.userName)),
@@ -109,9 +112,11 @@ app.post("/checkout", (req,res) => {
           quantity: qty[i]
         })
         .then({})
-        }
+        }}
     });
-  }); res.redirect("/orders")
+    // res.redirect("/orders")
+    res.redirect("/")
+  }); 
 });
 
 // restaurant views
@@ -126,8 +131,11 @@ app.get("/orders/:id", (req,res) => {
 
 app.post("/orders", (req,res) => {
   twilio.sendSMS(req.body.time);
+  res.redirect("/orders");
 });
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
+
+// console.log("TEST");
