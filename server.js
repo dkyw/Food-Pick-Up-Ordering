@@ -15,10 +15,13 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
 // Seperated Routes for each Resource
-// const usersRoutes = require("./routes/users");
+const usersRoutes = require("./routes/users");
 const restaurantsRoutes = require("./routes/restaurants");
 const itemsRoutes = require("./routes/items");
+const ordersRoutes = require("./routes/orders");
+const orders_itemsRoutes = require("./routes/orders_items");
 
+const twilio = require('./twilio');
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -38,18 +41,20 @@ app.use("/styles", sass({
 
 app.use(express.static("public"));
 
-var twilio = require('twilio');
+var client = require('twilio');
 
-var client = require('twilio')(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
+// var client = require('twilio')(
+//   process.env.TWILIO_ACCOUNT_SID,
+//   process.env.TWILIO_AUTH_TOKEN
+// );
 
 
 // Mount all resource routes
-// app.use("/api/users", usersRoutes(knex));
+app.use("/api/users", usersRoutes(knex));
 app.use("/api/restaurants", restaurantsRoutes(knex));
 app.use("/api/items", itemsRoutes(knex));
+app.use("/api/orders", ordersRoutes(knex));
+app.use("/api/orders_items", orders_itemsRoutes(knex));
 
 //client views
 
@@ -59,55 +64,69 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.post('/orders/message', (req,res) => {
-  res.render('order')
+app.post("/checkout/message", (req,res) => {
+  res.render("message");
 });
+
+
+function requestBody(user) {
+  let userId = knex.select('id').from('users').where('user_name', user);
+  return userId;
+}
+
+let orderId = knex.select('id').from('orders');
 
 app.post("/checkout", (req,res) => {
-  client.calls.create({
-    method: 'POST',
-    url: 'https://e31cd9d3.ngrok.io/orders/message',
-    from: "+17782007487",
-    to: "+16047823702",
-    // timeout: 12
-  }, function(err, call) {
-    console.log("call made");
+  // twilio.callRestaurants();
+// COMMENTED DURING DEV
+  knex('users')
+  .insert({
+    phone_number: req.body.userPhone,
+    user_name: req.body.userName
+  })
+  .then(function () {
+    knex('orders')
+    .insert({
+      status: "ordered",
+      total_amount: req.body.lastTotalAmount,
+      user_id: requestBody(req.body.userName)
+    })
+    .then(function () {
+      console.log(req.body.item, req.body.quantity);
+      console.log("length",req.body.item.length);
+      let item = req.body.item;
+      let qty = req.body.quantity;
+      let staging = [];
+      item.map(function (ele,index) {
+        staging.push([ele,qty[index]]);   
+      });console.log("outside for",req.body.userName);
+      for (let i = 0; i < staging.length; i++) {
+        console.log("inside for",req.body.userName);
+        knex('orders_items')
+        .insert({
+          order_id: orderId.where('user_id',requestBody(req.body.userName)),
+          item_id: knex.select('id').from('items').where('name',item[i]),
+          quantity: qty[i]
+        })
+        .then({})
+        }
+    });
+  }); res.redirect("/orders")
 });
-  res.send("OK");
-});
-
-
-//checkout
-app.post("/checkout", (req,res) => {
-  res.send('checkout');
-});
-
 
 // restaurant views
 
 app.get("/orders", (req,res) => {
-  res.send('restaurant view');
+  res.render('orders');
 });
 
 app.get("/orders/:id", (req,res) => {
   res.render('form');
 });
 
-
-
 app.post("/orders", (req,res) => {
-  client.messages.create({
-  from: "+17782007487",
-  to: "+16047823702",
-  body: req.body.time
-  }, function(err, message) {
-    if(err) {
-      console.error(err.message);
-    }
-  });
-  res.send('thanks!')
+  twilio.sendSMS(req.body.time);
 });
-
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

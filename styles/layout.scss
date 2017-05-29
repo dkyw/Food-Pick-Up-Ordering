@@ -64,8 +64,8 @@ body {
     color: #333333;
     font-family: 'Inconsolata', monospace;
     font-size: 1.5em;
-    height: 100em;
-    opacity: 0.8;
+    height: 58em;
+    // opacity: 0.8;
 
     .yourOrder {
       background-color: white;
@@ -75,6 +75,7 @@ body {
 
     .checkout {
       float: right;
+      margin-top: 2em;
     }
   }
 

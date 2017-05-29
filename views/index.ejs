@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Optional theme -->
@@ -25,9 +26,7 @@
         <!--NAVBAR "START"-->
       <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
-
           <button type="button" class="btn btn-lg pull-right order">Order</button>
-
         </div>
       </nav>
       <!--NAVBAR "END"-->
@@ -46,13 +45,24 @@
         <div id="totalAmount">
           <h2>Total: </h2>
           <h3 class="total"></h3>
-
         </div>
+        <form action="/checkout" method="POST" class="checkoutForm">
+          <div class="userDivForm">
+            <label for="userName">Name: </label>
+            <input type="text required" name="userName" class="userName form-control"></input>
+            <label for="userPhone">Phone #: </label>
+            <input type="text" name="userPhone" class="userPhone form-control" value="+1"></input>
+          </div>
+          <div class="checkDivForm">
+            <input type="submit" class="btn btn-lg btn-success pull-right checkout" value="Checkout"></input>
+          </div>
+          <div class="order_itemDivForm">
 
-        <button type="button" class="btn btn-lg btn-success pull-right checkout">Checkout</button>
+          </div>
+        </form>
       </div>
         <div class="row" id="foodItems"></div>
-     </div><!--/container -->
+     </div>
 <!--THUMBNAIL "END""-->
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
