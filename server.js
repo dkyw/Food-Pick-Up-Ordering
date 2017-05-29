@@ -43,12 +43,6 @@ app.use(express.static("public"));
 
 var client = require('twilio');
 
-// var client = require('twilio')(
-//   process.env.TWILIO_ACCOUNT_SID,
-//   process.env.TWILIO_AUTH_TOKEN
-// );
-
-
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 app.use("/api/restaurants", restaurantsRoutes(knex));
@@ -106,9 +100,14 @@ app.post("/checkout", (req,res) => {
       } else {
       let staging = [];
       item.map(function (ele,index) {
+<<<<<<< HEAD
         staging.push([ele,qty[index]]);   
       });
       // console.log("outside for",req.body.userName);
+=======
+        staging.push([ele,qty[index]]);
+      });console.log("outside for",req.body.userName);
+>>>>>>> 51f3c92e0a3b3dfd7a280fdaf6b0d0965bde9e19
       for (let i = 0; i < staging.length; i++) {
         // console.log("inside for",req.body.userName);
         knex('orders_items')
@@ -135,6 +134,7 @@ app.get("/orders/:id", (req,res) => {
 
 app.post("/orders", (req,res) => {
   twilio.sendSMS(req.body.time);
+  res.redirect("/orders");
 });
 
 app.listen(PORT, () => {
