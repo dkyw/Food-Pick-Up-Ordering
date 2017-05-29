@@ -13,6 +13,7 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+const cookieSession = require('cookie-session');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -49,6 +50,14 @@ app.use("/api/restaurants", restaurantsRoutes(knex));
 app.use("/api/items", itemsRoutes(knex));
 app.use("/api/orders", ordersRoutes(knex));
 app.use("/api/orders_items", orders_itemsRoutes(knex));
+
+app.use(cookieSession({
+  secret: ['foodDelivery']
+}));
+app.use((req, res, next) => {
+  req.session.lastRequest = Date.now();
+  next();
+})
 
 //client views
 
