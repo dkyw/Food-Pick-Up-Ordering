@@ -8,7 +8,7 @@ $(() => {
   })
   .done(function(orders_items) {
     for (order of orders_items) {
-      var orderId = $('<h2>').text(`Order #: ${order.order_id}`);
+      var orderId = $('<h2>').text(`Order #: ${orderUrlId}`);
       if (order.order_id == orderUrlId) {
         var itemId = order.item_id
         var quantity= order.quantity;
@@ -17,7 +17,7 @@ $(() => {
       }
       $('.orders').append(itemOrder,itemQuantity);
     }
-    // $('.orders').before(orderId);
+    $('.orders').before(orderId);
   });
 
 
