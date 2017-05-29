@@ -86,7 +86,6 @@ app.post("/checkout", (req,res) => {
       user_id: requestBody(req.body.userName)
     })
     .then(function () {
-      // console.log("USERNAME",req.body.userName);
       let item = req.body.item;
       let qty = req.body.quantity;
       if (typeof([]) !== typeof(req.body.item)) {
@@ -102,9 +101,7 @@ app.post("/checkout", (req,res) => {
       item.map(function (ele,index) {
         staging.push([ele,qty[index]]);   
       });
-      // console.log("outside for",req.body.userName);
       for (let i = 0; i < staging.length; i++) {
-        // console.log("inside for",req.body.userName);
         knex('orders_items')
         .insert({
           order_id: orderId.where('user_id',requestBody(req.body.userName)),
@@ -137,5 +134,3 @@ app.post("/orders", (req,res) => {
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
-
-// console.log("TEST");
