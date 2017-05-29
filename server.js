@@ -77,7 +77,7 @@ app.post("/checkout", (req,res) => {
   .insert({
     phone_number: req.body.userPhone,
     user_name: req.body.userName
-  }) 
+  })
   .then(function () {
     knex('orders')
     .insert({
@@ -86,7 +86,7 @@ app.post("/checkout", (req,res) => {
       user_id: requestBody(req.body.userName)
     })
     .then(function () {
-      // console.log("USERNAME",req.body.userName);
+      // console.log("USERNAME",(orderId.where('user_id',requestBody(req.body.userName))).toString());
       let item = req.body.item;
       let qty = req.body.quantity;
       if (typeof([]) !== typeof(req.body.item)) {
@@ -102,9 +102,9 @@ app.post("/checkout", (req,res) => {
       item.map(function (ele,index) {
         staging.push([ele,qty[index]]);   
       });
-      // console.log("outside for",req.body.userName);
+      // console.log("outside for",(orderId.where('user_id',requestBody(req.body.userName))).toString());
       for (let i = 0; i < staging.length; i++) {
-        // console.log("inside for",req.body.userName);
+        // console.log("inside for",(orderId.where('user_id',requestBody(req.body.userName))).toString());
         knex('orders_items')
         .insert({
           order_id: orderId.where('user_id',requestBody(req.body.userName)),
