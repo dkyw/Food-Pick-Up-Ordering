@@ -43,12 +43,6 @@ app.use(express.static("public"));
 
 var client = require('twilio');
 
-// var client = require('twilio')(
-//   process.env.TWILIO_ACCOUNT_SID,
-//   process.env.TWILIO_AUTH_TOKEN
-// );
-
-
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 app.use("/api/restaurants", restaurantsRoutes(knex));
@@ -77,7 +71,7 @@ function requestBody(user) {
 let orderId = knex.select('id').from('orders');
 
 app.post("/checkout", (req,res) => {
-  // twilio.callRestaurants();
+  twilio.callRestaurants();
 // COMMENTED DURING DEV
   knex('users')
   .insert({
@@ -98,7 +92,7 @@ app.post("/checkout", (req,res) => {
       let qty = req.body.quantity;
       let staging = [];
       item.map(function (ele,index) {
-        staging.push([ele,qty[index]]);   
+        staging.push([ele,qty[index]]);
       });console.log("outside for",req.body.userName);
       for (let i = 0; i < staging.length; i++) {
         console.log("inside for",req.body.userName);
@@ -126,6 +120,7 @@ app.get("/orders/:id", (req,res) => {
 
 app.post("/orders", (req,res) => {
   twilio.sendSMS(req.body.time);
+  res.redirect("/orders");
 });
 
 app.listen(PORT, () => {

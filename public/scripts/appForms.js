@@ -1,34 +1,37 @@
 $(() => {
 
+  var orderUrlId = document.URL.toString().slice(29);
+
+
+  $.ajax({
+    method: "GET",
+    url: "/api/orders_items"
+    // async: false,
+  })
+  .done(function(orders_items) {
+    for (order of orders_items) {
+      var orderId = $('<h2>').text(`Order #: ${order.order_id}`);
+      if (order.order_id == orderUrlId) {
+        var itemId = order.item_id
+        var quantity= order.quantity;
+        var itemOrder = $('<h2>').text(`Item: ${itemId}`).addClass(`${itemId}`);
+        var itemQuantity = $('<h2>').text(`Quantity: ${quantity}`);
+      }
+      $('.orders').append(itemOrder,itemQuantity);
+    }
+    // $('.orders').before(orderId);
+  });
+
+
+
   $.ajax({
     method: "GET",
     url: "/api/items"
   })
-  .done(function(orders) {
-    for (order of orders) {
-      var $orderId = $("<h2>").text(order.id);
-      var $orderStatus = $("<h2>").text(`STATUS: ${order.status}`);
-      var $orderTotal = $("<h2>").text(`AMOUNT: $ ${order.total_amount}`).addClass("orderTotal");
-      var $divider = $("<p>").addClass(`divider ${order.user_id}`).text("===================================");
-
-      $(".orders").append(`<a href="/orders/${order.id}">ORDER #: ${order.id}</a>`, $orderStatus, $orderTotal, $divider);
+  .done(function(items) {
+    for (item of items) {
+      $(`.${item.id}`).text(`Item: ${item.name}`);
     }
   });
-
-$.ajax({
-    method: "GET",
-    url: "/api/orders_items"
-  })
-  .done(function(orders) {
-    for (order of orders) {
-      var $orderId = $("<h2>").text(order.id);
-      var $orderStatus = $("<h2>").text(`STATUS: ${order.status}`);
-      var $orderTotal = $("<h2>").text(`AMOUNT: $ ${order.total_amount}`).addClass("orderTotal");
-      var $divider = $("<p>").addClass(`divider ${order.user_id}`).text("===================================");
-
-      $(".orders").append(`<a href="/orders/${order.id}">ORDER #: ${order.id}</a>`, $orderStatus, $orderTotal, $divider);
-    }
-  });
-
 
 }); //end
