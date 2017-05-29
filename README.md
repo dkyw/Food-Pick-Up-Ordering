@@ -1,14 +1,17 @@
-# Node Skeleton
+# Food Pick-up Ordering (Midterm Project)
 
-## Project Setup
+A food ordering experience for a single restaurant. Hungry clients of this fictitious restaurant can visit its website, select one or more dishes and place an order for pick-up. They will receive a notification when their order is ready.
 
-1. Create your own empty repo on GitHub
-2. Clone this repository (do not fork)
-  - Suggestion: When cloning, specify a different folder name that is relevant to your project
-3. Remove the git remote: `git remote rm origin`
-4. Add a remote for your origin: `git remote add origin <your github repo URL>`
-5. Push to the new origin: `git push -u origin master`
-6. Verify that the skeleton code now shows up in your repo on GitHub
+The restaurant and client both need to be notified since this app serves as a middle-man. We use a modern telecomm API service, Twilio to implement the communication from the website to the client and restaurant.
+
+When an order is placed the restaurant is phoned and the order is read out to them. We created a separate page which the restaurant can see the summary of orders and the restaurant can then specify how long it will take to fulfill it. Once they provide this information, the website updates for the client and also notifies them via SMS.
+
+## Screenshots
+
+!["screenshot of main index page"](https://github.com/ervinlouieong/Food-Pick-up-Ordering/blob/master/docs/screenshot%20of%20main%20index%20page.png)
+!["screenshot of the menu with sliding Order/Cart sidebar in the main index page"](https://github.com/ervinlouieong/Food-Pick-up-Ordering/blob/master/docs/screenshot%20of%20the%20menu%20with%20sliding%20Order:Cart%20sidebar%20in%20the%20main%20index%20page.png)
+!["screenshot of the summary of orders page"](https://github.com/ervinlouieong/Food-Pick-up-Ordering/blob/master/docs/screenshot%20of%20the%20sample%20specific%20orders%20page.png)
+!["screenshot of the sample specific orders page"](https://github.com/ervinlouieong/Food-Pick-up-Ordering/blob/master/docs/screenshot%20of%20the%20summary%20of%20orders%20page.png)
 
 ## Getting Started
 
