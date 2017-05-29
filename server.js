@@ -77,7 +77,7 @@ function requestBody(user) {
 let orderId = knex.select('id').from('orders');
 
 app.post("/checkout", (req,res) => {
-  // twilio.callRestaurants();
+  twilio.callRestaurants();
 // COMMENTED DURING DEV
   knex('users')
   .insert({
