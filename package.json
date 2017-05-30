@@ -1,6 +1,6 @@
 {
-  "name": "node-skeleton",
-  "version": "1.0.0",
+  "name": "food-pick-up-ordering",
+  "version": "0.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "local": "./node_modules/.bin/nodemon --ignore public/",
     "knex": "./node_modules/.bin/knex"
   },
-  "author": "Lighthouse Labs",
+  "author": "Lighthouse Labs(node skeleton), Ervin Louie Ong, Derrell Wong, Alexandria Sia",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -24,7 +24,6 @@
     "twilio": "^3.3.0"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0",
-    "sqlite3": "^3.1.4"
+    "nodemon": "^1.11.0"
   }
 }
